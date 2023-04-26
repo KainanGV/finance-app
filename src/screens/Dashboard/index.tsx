@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper } from "./styles"
+import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper, HighlightCards } from "./styles"
 import { HighlightCard } from "../../components/HighlightCard"
 
 export function Dashboard() {
@@ -20,7 +20,12 @@ export function Dashboard() {
 
         </Header>
 
-        <HighlightCard />
+        <HighlightCards>
+          <HighlightCard />
+          <HighlightCard />
+          <HighlightCard />
+        </HighlightCards>
+
       </Container>
   )
 }
