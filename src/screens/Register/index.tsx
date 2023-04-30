@@ -8,7 +8,7 @@ export function Register() {
   return (
     <Container>
       <Header>
-        <Title>Cadastro</Title>
+        <Title>Register</Title>
       </Header>
 
       <Form>
