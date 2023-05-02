@@ -1,10 +1,18 @@
-import React from "react"
+import React, {useState} from "react"
 
-import { Container, Title, Header, Form, Fields } from "./styles"
+import { Container, Title, Header, Form, Fields, TransactionType } from "./styles"
 import { Input } from "../../components/Forms/Input"
 import { Button } from "../../components/Forms/Button"
+import { TransactionTypeButton } from "../../components/Forms/TransactionTypeButton"
+import { GestureResponderEvent } from "react-native"
 
 export function Register() {
+  const [transactionType, setTransactionType] = useState<string>("")
+
+  function handleTransactionTypeSelect(value: "down" | "up") {
+    setTransactionType(value)
+  }
+
   return (
     <Container>
       <Header>
@@ -15,6 +23,13 @@ export function Register() {
         <Fields>
           <Input placeholder="Name" />
           <Input placeholder="Price" />
+
+          <TransactionType>
+            <TransactionTypeButton type="up" title="incoming" onPress={() => handleTransactionTypeSelect("up")} isActive={transactionType === "up"} />
+            <TransactionTypeButton type="down" title="Outcoming" onPress={() => handleTransactionTypeSelect("down")} isActive={transactionType === "down"} />  
+          </TransactionType>
+
+
         </Fields>
 
         <Button title='Send'  />
