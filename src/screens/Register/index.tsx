@@ -5,6 +5,7 @@ import { Input } from "../../components/Forms/Input"
 import { Button } from "../../components/Forms/Button"
 import { TransactionTypeButton } from "../../components/Forms/TransactionTypeButton"
 import { GestureResponderEvent } from "react-native"
+import { CategorySelect } from "../../components/Forms/CategorySelect"
 
 export function Register() {
   const [transactionType, setTransactionType] = useState<string>("")
@@ -29,6 +30,7 @@ export function Register() {
             <TransactionTypeButton type="down" title="Outcoming" onPress={() => handleTransactionTypeSelect("down")} isActive={transactionType === "down"} />  
           </TransactionType>
 
+          <CategorySelect title="Category" />
 
         </Fields>
 
