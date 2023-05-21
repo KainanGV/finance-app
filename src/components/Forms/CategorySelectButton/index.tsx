@@ -1,13 +1,14 @@
-import React from "react-native"
+import React, { TouchableOpacity } from "react-native"
 import { Container, Category, Icon } from "./styles"
 
 interface PropsCategorySelect {
   title: string
+  onPress: () => void
 }
 
-export function CategorySelect({title}: PropsCategorySelect) {
+export function CategorySelectButton({title, onPress}: PropsCategorySelect) {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Category>
         {title}
       </Category>
