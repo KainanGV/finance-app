@@ -1,6 +1,6 @@
-import React, {useState, useCallback, useEffect} from 'react';
-// import { Dashboard } from './src/screens/Dashboard';
-import { Register } from './src/screens/Register';
+// import 'react-native-gesture-handler';
+
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import theme from "./src/global/styles/theme"
 import {
@@ -9,17 +9,13 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins"
-import { StatusBar, View } from 'react-native';
-import { CategorySelect } from './src/screens/CategorySelect';
-import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'react-native';
 import {
   
 } from "@expo-google-fonts/poppins"
-import { Dashboard } from './src/screens/Dashboard';
 import AppLoading from 'expo-app-loading';
-import { FontDisplay } from 'expo-font';
-
-// SplashScreen.preventAutoHideAsync(); // Keep the splash screen visible while we fetch resources
+import {NavigationContainer} from "@react-navigation/native"
+import { AppRoutes } from './src/routes/app.routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -39,11 +35,9 @@ export default function App() {
           translucent
           barStyle="light-content"
         />
-
-        {/* <Dashboard /> */}
-        <Register />
-        {/* <CategorySelect /> */}
-        
+        <NavigationContainer>
+          <AppRoutes />
+        </NavigationContainer>
       </ThemeProvider>
   );
 }

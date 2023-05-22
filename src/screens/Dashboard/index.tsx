@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper, HighlightCards, Transactions, Title, TransactionsList } from "./styles"
+import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper, HighlightCards, Transactions, Title, TransactionsList, LogoutButton } from "./styles"
 import { HighlightCard } from "../../components/HighlightCard"
 import {TransactionCard, TransactionCardProps} from "../../components/TransactionCard"
 
@@ -38,7 +38,9 @@ export function Dashboard() {
               </User>
             </UserInfo>
 
-            <Icon name="power" />
+            <LogoutButton>
+              <Icon name="power" />
+            </LogoutButton>
           </UserWrapper>
 
         </Header>
