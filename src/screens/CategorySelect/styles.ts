@@ -8,12 +8,12 @@ interface CategoryProps {
   isActive: boolean
 }
 
-export const Container = styled(GestureHandlerRootView)`
+export const Container = styled.View`
   flex: 1;
   background-color: ${({theme}) => theme.colors.background} ;
 `
 
-export const Header = styled.View`
+export const Header = styled(GestureHandlerRootView)`
   width:100% ;
   height: ${RFValue(113)}px;
 
