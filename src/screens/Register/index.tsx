@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native"
+import { Modal, Keyboard, Alert } from "react-native"
 
 import { Container, Title, Header, Form, Fields, TransactionType } from "./styles"
 import { Button } from "../../components/Forms/Button"
@@ -10,6 +10,7 @@ import { InputForm } from "../../components/Forms/InputForm"
 import {useForm, Control} from "react-hook-form"
 import * as Yup from "yup"
 import {yupResolver} from "@hookform/resolvers/yup"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 
 interface FormData {
   name: string;
