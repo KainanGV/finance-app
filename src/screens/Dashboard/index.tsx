@@ -1,30 +1,39 @@
-import React from "react"
+import React, { useState } from "react"
 import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper, HighlightCards, Transactions, Title, TransactionsList, LogoutButton } from "./styles"
 import { HighlightCard } from "../../components/HighlightCard"
 import {TransactionCard, TransactionCardProps} from "../../components/TransactionCard"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useEffect } from "react"
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
 }
 
 export function Dashboard() {
-  const data: DataListProps[] = [
-    {
-      id: "1",
-      title: "Desenvolvimento site web", amount:"R$ 12.000,00", category: {name: "Vendas", icon: "dollar-sign"}, date: "12/12/1222",
-      type: "positive"
-    },
-    {
-      id: "2",
-      title: "Desenvolvimento site web", amount:"R$ 12.000,00", category: {name: "Vendas", icon: "dollar-sign"}, date: "12/12/1222",
-      type: "negative"
-    },
-    {
-      id: "3",
-      title: "Desenvolvimento site web", amount:"R$ 12.000,00", category: {name: "Vendas", icon: "dollar-sign"}, date: "12/12/1222",
-      type: "negative"
-    }
-  ]
+  const [data, setData] = useState<DataListProps[]>([])
+
+  async function loadData() {
+    const response = await AsyncStorage.getItem("@gofinances:transactions")
+    const transactions = response ? JSON.parse(response) : []
+
+    const transactionsFormatted: DataListProps[] = transactions.map((item: any) => {
+      const amount = Number(item.price).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+
+      const date = new Date(item.date)
+      const dateFormatted = Intl.DateTimeFormat('pt-BR', {day: '2-digit', month: '2-digit', year: '2-digit'}).format(date)
+
+      return {...item, date: dateFormatted, amount}
+    })
+
+    setData(transactionsFormatted)
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+
+
 
   return (
       <Container>
@@ -33,7 +42,7 @@ export function Dashboard() {
             <UserInfo>
               <Photo source={{uri: "https://avatars.githubusercontent.com/u/71570785?v=4"}} />
               <User>
-                <UserGreeting>Olá</UserGreeting>
+                <UserGreeting>Olá</UserGreeting>  
                 <UserName>Rodrigo</UserName>
               </User>
             </UserInfo>

@@ -5,7 +5,7 @@ import { getStatusBarHeight } from "react-native-iphone-x-helper"
 import { FlatList, FlatListProps } from "react-native"
 import { getBottomSpace } from "react-native-iphone-x-helper"
 import { DataListProps } from "."
-import {BorderlessButton} from "react-native-gesture-handler"
+import { BorderlessButton } from "react-native-gesture-handler"
 
 export const Container = styled.View`
   flex: 1;
@@ -21,7 +21,7 @@ export const UserWrapper = styled.View`
   justify-content: space-between;
   align-items: center;
   
-  margin-top: ${getStatusBarHeight() + RFValue(28)}px;
+  margin-top: ${getStatusBarHeight() + RFValue(20)}px;
 `
 
 export const Header = styled.View`

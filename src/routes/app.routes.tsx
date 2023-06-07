@@ -36,7 +36,7 @@ export function AppRoutes() {
       />
       <Screen 
         name="Resume" 
-        component={Register} 
+        component={Dashboard} 
         options={{
           tabBarIcon: (({size, color}) => <MaterialIcons name="pie-chart" size={size} color={color} />)
         }} 
