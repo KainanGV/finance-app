@@ -30,6 +30,7 @@ interface FormInput extends FormData {
   transactionType: TransactionType;
   category: string;
   date: Date;
+  type: string
 }
 
 const schema = Yup.object().shape({
@@ -44,7 +45,7 @@ export function Register() {
   const {control, handleSubmit, formState: {errors}, reset} = useForm<FormData>({defaultValues: {price: "", name: ""}, resolver: yupResolver(schema)})
   const navigation = useNavigation<NavigationProps>();
 
-  function handleTransactionTypeSelect(value: TransactionType) {
+  function handleTransactionTypeSelect(value: 'positive' | 'negative') {
     setTransactionType(value)
   }
 
@@ -62,7 +63,8 @@ export function Register() {
       ...data, 
       transactionType: transactionType as TransactionType, 
       category: category.key,
-      date: new Date()
+      date: new Date(),
+      type: transactionType
     }
     
     // if(!transactionType) return Alert.alert("Field select is required")
@@ -109,8 +111,8 @@ export function Register() {
               <InputForm control={control as unknown as Control} name="price" placeholder="Price" keyboardType="numeric" error={errors.price && errors.price.message} />
 
               <TransactionType>
-                <TransactionTypeButton type="up" title="incoming" onPress={() => handleTransactionTypeSelect("up")} isActive={transactionType === "up"} />
-                <TransactionTypeButton type="down" title="Outcoming" onPress={() => handleTransactionTypeSelect("down")} isActive={transactionType === "down"} />  
+                <TransactionTypeButton type="up" title="incoming" onPress={() => handleTransactionTypeSelect("positive")} isActive={transactionType === "up"} />
+                <TransactionTypeButton type="down" title="Outcoming" onPress={() => handleTransactionTypeSelect("negative")} isActive={transactionType === "down"} />  
               </TransactionType>
 
               <CategorySelectButton title={category.name} onPress={handleOpenModalSelectCategory} />
