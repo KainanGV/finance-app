@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper, HighlightCards, Transactions, Title, TransactionsList, LogoutButton } from "./styles"
 import { HighlightCard } from "../../components/HighlightCard"
 import {TransactionCard, TransactionCardProps} from "../../components/TransactionCard"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect } from "react"
+import { useFocusEffect } from "@react-navigation/core"
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
@@ -32,8 +33,9 @@ export function Dashboard() {
     loadData()
   }, [])
 
-
-
+  useFocusEffect(useCallback(() => {
+    loadData()
+  },[]))
 
   return (
       <Container>
