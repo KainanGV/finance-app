@@ -85,19 +85,25 @@ export const Transactions = styled.View`
   padding: 0 24px;
 
   margin-top: ${RFPercentage(12)}px;
-`
+`;
 
 export const Title = styled.Text`
   font-size: ${RFValue(18)}px;
   font-family: ${props => props.theme.fonts.regular};
 
   margin-bottom: 16px;
-`
+`;
 
 export const TransactionsList = styled(
   FlatList as new (props: FlatListProps<DataListProps>) => FlatList<DataListProps>
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: { paddingBottom: getBottomSpace() }
-})``
+})``;
+
+export const LoadContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center
+`
 

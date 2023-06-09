@@ -91,7 +91,7 @@ export function Register() {
 
   // useEffect(() => {
   //   async function removeAll() {
-  //     console.log(await AsyncStorage.getItem("@gofinances:transactions"))
+  //     // console.log(await AsyncStorage.getItem("@gofinances:transactions"))
   //     // await AsyncStorage.removeItem("@gofinances:transactions")
   //   }
 
@@ -111,8 +111,8 @@ export function Register() {
               <InputForm control={control as unknown as Control} name="price" placeholder="Price" keyboardType="numeric" error={errors.price && errors.price.message} />
 
               <TransactionType>
-                <TransactionTypeButton type="up" title="incoming" onPress={() => handleTransactionTypeSelect("positive")} isActive={transactionType === "up"} />
-                <TransactionTypeButton type="down" title="Outcoming" onPress={() => handleTransactionTypeSelect("negative")} isActive={transactionType === "down"} />  
+                <TransactionTypeButton type="up" title="incoming" onPress={() => handleTransactionTypeSelect("positive")} isActive={transactionType === "positive"} />
+                <TransactionTypeButton type="down" title="Outcoming" onPress={() => handleTransactionTypeSelect("negative")} isActive={transactionType === "negative"} />  
               </TransactionType>
 
               <CategorySelectButton title={category.name} onPress={handleOpenModalSelectCategory} />
