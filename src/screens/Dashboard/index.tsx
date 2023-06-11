@@ -8,13 +8,15 @@ import { useFocusEffect } from "@react-navigation/core"
 import { formatCurrencyPtBr } from "../../helpers/formatCurrencyPtBr"
 import {ActivityIndicator} from "react-native"
 import { useTheme } from "styled-components"
+import { formatLastTransactionDate } from "../../helpers/formatLastTransactionDate"
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
 }
 
 export type Amount = {
-  amount: string
+  amount: string;
+  lastTransaction: string
 }
 
 interface HighlightProps {
@@ -47,17 +49,28 @@ export function Dashboard() {
       return {...item, date: dateFormatted, amount}
     })
 
+    
+    const lastTransactionPositive = formatLastTransactionDate((data.filter(transaction => transaction.type === 'positive').at(-1)?.date as string))
+    const lastTransactionNegative = formatLastTransactionDate((data.filter(transaction => transaction.type === 'negative').at(-1)?.date as string))
+
+    const totalInterval = `01 a ${lastTransactionNegative.toLocaleString('pt-BR', {month: 'long'})}`
+    
     setHighlight({
       entries: {
-        amount: formatCurrencyPtBr(entriesTotal as number)
+        amount: formatCurrencyPtBr(entriesTotal as number),
+        lastTransaction:`Última entrada dia ${lastTransactionPositive.getDate()} de ${lastTransactionPositive.toLocaleString('pt-BR', {month: 'long'})}`
       }, 
       expensives: {
-        amount: formatCurrencyPtBr(expensiveTotal)
+        amount: formatCurrencyPtBr(expensiveTotal),
+        lastTransaction: `Última saída dia ${lastTransactionNegative.getDate()} de ${lastTransactionNegative.toLocaleString('pt-BR', {month: 'long'})}`
       },
-      total: {amount: formatCurrencyPtBr(entriesTotal + expensiveTotal)}
+      total: {
+        amount: formatCurrencyPtBr(entriesTotal - expensiveTotal),
+        lastTransaction: totalInterval
+      }
     })
-    setIsLoading(false)
     setData(transactionsFormatted)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -95,9 +108,24 @@ export function Dashboard() {
           </Header>
 
           <HighlightCards>
-            <HighlightCard type="up" title="Entradas" amount={highlight.entries.amount} lastTransaction="Útima entrada dia 13 de abril" />
-            <HighlightCard type="down" title="Saídas" amount={highlight.expensives.amount} lastTransaction="Útima entrada dia 13 de abril" />
-            <HighlightCard type="total" title="Total" amount={highlight.total.amount} lastTransaction="Útima entrada dia 13 de abril" />
+            <HighlightCard 
+              type="up" 
+              title="Entradas" 
+              amount={highlight.entries.amount} 
+              lastTransaction={highlight.entries.lastTransaction}
+            />
+            <HighlightCard 
+              type="down" 
+              title="Saídas" 
+              amount={highlight.expensives.amount} 
+              lastTransaction={highlight.expensives.lastTransaction}
+            />
+            <HighlightCard 
+              type="total" 
+              title="Total" 
+              amount={highlight.total.amount} 
+              lastTransaction={highlight.total.lastTransaction}
+            />
           </HighlightCards>
 
           <Transactions>

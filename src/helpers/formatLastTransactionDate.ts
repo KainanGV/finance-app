@@ -1,0 +1,1 @@
+export const formatLastTransactionDate = (value: string) => new Date(value.replaceAll("/", "-"))
