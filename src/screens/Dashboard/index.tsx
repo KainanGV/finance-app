@@ -49,9 +49,8 @@ export function Dashboard() {
       return {...item, date: dateFormatted, amount}
     })
 
-    
-    const lastTransactionPositive = formatLastTransactionDate((data.filter(transaction => transaction.type === 'positive').at(-1)?.date as string))
-    const lastTransactionNegative = formatLastTransactionDate((data.filter(transaction => transaction.type === 'negative').at(-1)?.date as string))
+    const lastTransactionPositive = formatLastTransactionDate((data.filter(transaction => transaction.type === 'positive').at(-1)?.date as string) ?? '')
+    const lastTransactionNegative = formatLastTransactionDate((data.filter(transaction => transaction.type === 'negative').at(-1)?.date as string) ?? '')
 
     const totalInterval = `01 a ${lastTransactionNegative.toLocaleString('pt-BR', {month: 'long'})}`
     
