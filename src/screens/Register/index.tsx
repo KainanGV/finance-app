@@ -14,6 +14,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import UUID from "react-native-uuid"
 import {useNavigation} from "@react-navigation/native"
+import { useAuth } from "../../hooks/auth"
 
 interface FormData {
   name: string;
@@ -44,6 +45,7 @@ export function Register() {
   const [category, setCategory] = useState({key: "category", name: "Category"})
   const {control, handleSubmit, formState: {errors}, reset} = useForm<FormData>({defaultValues: {price: "", name: ""}, resolver: yupResolver(schema)})
   const navigation = useNavigation<NavigationProps>();
+  const {user} = useAuth()
 
   function handleTransactionTypeSelect(value: 'positive' | 'negative') {
     setTransactionType(value)
@@ -72,7 +74,7 @@ export function Register() {
     // if(formData.category.toLowerCase() === "category") return Alert.alert("Field category is required")
 
     try {
-      const collectionKey = "@gofinances:transactions"
+      const collectionKey = `@gofinances:transactions_user:${user.id}`
       const data = await AsyncStorage.getItem(collectionKey)
       const currentData = (!!data ? JSON.parse(data) : []) as any[]
       currentData.push(formData)

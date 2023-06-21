@@ -5,19 +5,25 @@ import Logo from "../../assets/logo.svg"
 import { RFValue } from "react-native-responsive-fontsize"
 import { SignInSocialButton } from "../../components/SignInSocialButton"
 import { useAuth } from "../../hooks/auth"
-import { Alert } from "react-native"
+import { ActivityIndicator, Alert, Platform } from "react-native"
+import { useState } from "react"
+import { useTheme } from "styled-components"
 
 export const SignIn = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const {signInWithGoogle}= useAuth()
+  const theme = useTheme()
 
   async function handleSignInWithGoogle() {
     try {
+      setIsLoading(true)
       await signInWithGoogle()
 
     } catch (error) {
       console.log(error)
       Alert.alert("Erro durante a autenticação")
-    }
+      setIsLoading(false)
+    } 
   }
 
   return (
@@ -35,10 +41,15 @@ export const SignIn = () => {
 
       <Footer>
         <FooterWrapper>
-          <SignInSocialButton onPress={handleSignInWithGoogle} title="Entrar com o Google" svg={Google} />
-          <SignInSocialButton title="Entrar com a Apple" svg={Apple} />
+          {
+            Platform.OS === 'ios' ? 
+            <SignInSocialButton title="Entrar com a Apple" svg={Apple} /> : 
+            <SignInSocialButton onPress={handleSignInWithGoogle} title="Entrar com o Google" svg={Google} />
+}          
         </FooterWrapper>
       </Footer>
+
+      {isLoading && <ActivityIndicator color={theme.colors.shape} size={"large"} style={{marginTop: 18}}/>}
     </Container>
   )
 }

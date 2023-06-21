@@ -13,6 +13,7 @@ import {addMonths, subMonths, format} from "date-fns"
 import {ptBR} from "date-fns/locale"
 import { ActivityIndicator } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import { useAuth } from '../../hooks/auth'
 
 type CategoryGroup = 
   'purchases' |
@@ -37,6 +38,7 @@ export const Resume = () => {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [data, setData] = useState<TransactionGroup[]>([])
   const theme = useTheme()
+  const {user} = useAuth()
 
   function handleDateChange(action: 'next' | 'prev') {
     if(action === 'next') {
@@ -52,7 +54,7 @@ export const Resume = () => {
     setIsLoading(true)
 
     const resultFinal: TransactionGroup[] = []
-    const response = await AsyncStorage.getItem("@gofinances:transactions")
+    const response = await AsyncStorage.getItem(`@gofinances:transactions_user:${user.id}`)
     const currentData = (!!response ? JSON.parse(response) : []) as any[]
 
     const expensives = currentData
